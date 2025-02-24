@@ -14,6 +14,9 @@ jobs:
           username: nobody
           password: ${{ secrets.PACKAGE_REGISTRY_TOKEN }}
 
+      - name: Adjust Docker Socket Permissions
+        run: sudo chmod 666 /var/run/docker.sock
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -26,5 +29,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            forge-gitea.global.dev.lwsa-idp-testbed.ingress.sh/user/app:latest
-            forge-gitea.global.dev.lwsa-idp-testbed.ingress.sh/user/app:1.0.0
+            forge-gitea.global.dev.lwsa-idp-testbed.ingress.sh/giba/python-web-app:latest
+            forge-gitea.global.dev.lwsa-idp-testbed.ingress.sh/giba/python-web-app:1.0.0
