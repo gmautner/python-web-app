@@ -6,16 +6,27 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_HOST: tcp://localhost:2376
-      DOCKER_TLS_VERIFY: 1
-      DOCKER_CERT_PATH: /certs
     steps:
+      - name: Debug Docker certs
+        run: |
+          ls -la /certs/
+          echo "DOCKER_HOST environment: $DOCKER_HOST"
+          
+      - name: Set Docker environment
+        run: |
+          export DOCKER_HOST=tcp://localhost:2376
+          export DOCKER_TLS_VERIFY=1
+          export DOCKER_CERT_PATH=/certs
+          # Show what we've set
+          echo "DOCKER_HOST=$DOCKER_HOST"
+          echo "DOCKER_TLS_VERIFY=$DOCKER_TLS_VERIFY"
+          echo "DOCKER_CERT_PATH=$DOCKER_CERT_PATH"
+          # Apply to all subsequent steps
+          echo "DOCKER_HOST=$DOCKER_HOST" >> $ACT_ENV
+          echo "DOCKER_TLS_VERIFY=$DOCKER_TLS_VERIFY" >> $ACT_ENV
+          echo "DOCKER_CERT_PATH=$DOCKER_CERT_PATH" >> $ACT_ENV
+
       - name: Login to Gitea Package Registry
-        env:
-          DOCKER_HOST: ""
-          DOCKER_TLS_VERIFY: ""
-          DOCKER_CERT_PATH: ""
         uses: docker/login-action@v3
         with:
           registry: forge-gitea.global.dev.lwsa-idp-testbed.ingress.sh
