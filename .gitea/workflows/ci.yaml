@@ -14,9 +14,6 @@ jobs:
           username: nobody
           password: ${{ secrets.PACKAGE_REGISTRY_TOKEN }}
 
-      - name: Adjust Docker Socket Permissions
-        run: sudo chmod 666 /var/run/docker.sock
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
