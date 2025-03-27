@@ -13,7 +13,7 @@ jobs:
       - name: Login to Gitea Package Registry
         uses: docker/login-action@v3
         with:
-          registry: forge-gitea.global.dev.lwsa-idp-testbed.ingress.sh
+          registry: https://forge-gitea.global.staging.platform-tools.ingress.sh
           username: nobody
           password: ${{ secrets.PACKAGE_REGISTRY_TOKEN }}
 
